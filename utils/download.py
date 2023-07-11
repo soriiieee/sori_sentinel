@@ -8,17 +8,21 @@ import matplotlib.pyplot as plt
 
 import configparser
 from pathlib import Path
+import json
+cwd = Path(__file__).parent.parent
 
 
 def read_profiles():
-    cwd = Path(__file__).parent.parent
     params = configparser.ConfigParser(interpolation=None)
     params.read( os.path.join(cwd, "env" , "config.ini"),'UTF-8')
     return params
 
+def sentinelhub_compliance_hook(response):
+    response.raise_for_tatus()
+    return response
+    
 
-
-def test():
+def setToken():
     
     params = read_profiles()
     # Create a session
@@ -29,9 +33,27 @@ def test():
     token = oauth.fetch_token(
         token_url='https://services.sentinel-hub.com/oauth/token',
         client_id = params["sentinel"]["CLIENT_ID"], client_secret= params["sentinel"]["CLIENT_SECRET"])
-    print(token)
 
-    return
+    #All requests using this session will have an access token automatically added
+    # response = oauth.get("https://services.sentinel-hub.com/oauth/tokeninfo")
+    # print(token) #dict
+    # print(response.content)
+    # oauth.register_compliance_hook("access_token_response", sentinelhub_compliance_hook)
+    return token
+
+def searchAreaByLatLons():
+    with open(os.path.join(cwd , "env" , "search_information.json"),"r") as f:
+        search_info = json.load(f)
+    
+    print(search_info)
+    
+
+
+def test():
+    # token = setToken()
+    searchAreaByLatLons()
+    
+    
 
 if __name__ == "__main__":
     test()
