@@ -1,3 +1,17 @@
-import utils.download as d
+import os
+import sys
+import configparser
+from pathlib import Path
+import json
+cwd = Path(__file__).parent
 
-d.test()
+# from  utils.image import *
+from  utils.info import Information
+
+if __name__ == "__main__":
+    config_parameter = configparser.ConfigParser()
+    config_parameter.read(os.path.join(cwd , "config.ini"))
+    
+    info = Information()
+    info.collections
+    

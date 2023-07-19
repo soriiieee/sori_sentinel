@@ -1,4 +1,6 @@
 env/
 utils/__pycache__
+script/__pycache__
 input/
 output/
+*.ini

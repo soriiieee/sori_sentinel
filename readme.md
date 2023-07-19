@@ -18,5 +18,10 @@ pip install requests-oauthlib
 
 [教師データない時の浸水](https://sorabatake.jp/32855/?utm_source=newsletter&utm_medium=email&utm_campaign=20230711_s2)
 
+## tutorial (23.7.19)
+[tutorial(youtube)](https://www.youtube.com/watch?v=sX3w3Wd3FBw)
+[document(sentinel-hub-python)](https://sentinelhub-py.readthedocs.io/en/latest/)
+
+
 
 
