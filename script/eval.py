@@ -50,3 +50,23 @@ evalscript_true_color = """
         return [sample.B04, sample.B03, sample.B02];
     }
 """
+
+false_color_evalscript = """
+    //VERSION=3
+
+    function setup() {
+        return {
+            input: [{
+                bands: ["B03", "B04", "B08"]
+            }],
+            output: {
+                bands: 3
+            }
+        };
+    }
+
+    function evaluatePixel(sample) {
+        return [sample.B08, sample.B04, sample.B03];
+    }
+"""
+

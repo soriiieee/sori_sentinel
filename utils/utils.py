@@ -13,7 +13,11 @@ import os
 
 
 def plot_image(
-    image: np.ndarray, factor: float = 1.0, clip_range: Optional[Tuple[float, float]] = None, **kwargs: Any
+    image: np.ndarray, 
+    factor: float = 1.0, 
+    clip_range: Optional[Tuple[float, float]] = None,
+    save_name: str = "sample.png",
+    **kwargs: Any
 ) -> None:
     """Utility function for plotting RGB images."""
     fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(15, 15))
@@ -24,7 +28,40 @@ def plot_image(
     ax.set_xticks([])
     ax.set_yticks([])
     
-    fig.savefig(os.path.join(cwd , "output", "out.png"),bbox_inches="tight")
+    fig.savefig(os.path.join(cwd , "output", save_name),bbox_inches="tight")
     plt.close()
+
+# def plot_image(image, factor=1):
+#     """
+#     Utility function for plotting RGB images.
+#     """
+#     plt.subplots(nrows=1, ncols=1, figsize=(15, 7))
+
+#     if np.issubdtype(image.dtype, np.floating):
+#         plt.imshow(np.minimum(image * factor, 1))
+#     else:
+#         plt.imshow(image)
+
+
+def plot_images_2x2(images,unique_acquisitions) -> None:
+    
+    if len(images)>4:
+        images  = images[:4]
+        unique_acquisitions = unique_acquisitions[:4]
+    
+    """Utility function for plotting RGB images."""
+    ncols, nrows = 2, 2
+
+    fig, axis = plt.subplots(
+        ncols=ncols, nrows=nrows, figsize=(15, 10), subplot_kw={"xticks": [], "yticks": [], "frame_on": False}
+    )
+    for idx, (image, timestamp) in enumerate(zip(images, unique_acquisitions)):
+        ax = axis[idx // ncols][idx % ncols]
+        ax.imshow(np.clip(image * 2.5 / 255, 0, 1))
+        ax.set_title(timestamp.date().isoformat(), fontsize=10)
+
+    fig.savefig(os.path.join(cwd , "output", "out_2x2.png"),bbox_inches="tight")
+    plt.close()
+    return None
     
     
